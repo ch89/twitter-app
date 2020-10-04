@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tweet;
+use App\Notifications\TweetLiked;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
@@ -48,6 +49,9 @@ class TweetController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate(["content" => "required"]);
+
+        $data["gif"] = request("gif");
+
         $data["user_id"] = 1;
 
         return Tweet::create($data)->load("user");
@@ -100,5 +104,7 @@ class TweetController extends Controller
 
     public function like(Tweet $tweet) {
         auth()->user()->likes()->toggle($tweet);
+
+        $tweet->user->notify(new TweetLiked($tweet));
     }
 }

@@ -8,7 +8,7 @@
 						<i class="fas fa-times"></i>
 					</button>
 				</div>
-				<div class="border-t border-b p-4">
+				<div class="border-t border-b max-h-lg overflow-auto p-4">
 					<slot></slot>
 				</div>
 				<div class="flex justify-end p-4">

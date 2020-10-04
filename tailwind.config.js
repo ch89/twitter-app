@@ -17,8 +17,12 @@ module.exports = {
         xl: "1rem"
       },
       inset: {
-        "1/2": "50%"
-      }
+        "1/2": "50%",
+        "4": "1rem"
+      },
+      maxHeight: {
+        lg: '32rem'
+      },
     },
   },
   variants: {},

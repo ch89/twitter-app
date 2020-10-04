@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex items-center bg-white border-b p-4 sticky top-0 z-10">
-			<a href="#" class="text-lg text-blue mr-4">
+			<a href="#" class="text-lg text-blue mr-4" @click.prevent="$router.back()">
 				<i class="fas fa-arrow-left"></i>
 			</a>
 			<h3 class="text-lg font-bold">{{ user.name }}</h3>
@@ -41,16 +41,17 @@
 				</div>
 			</div>
 			<nav class="border-b flex">
-				<a href="#" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Tweets</a>
-				<a href="#" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Tweets & Replies</a>
-				<a href="#" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Media</a>
-				<a href="#" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Likes</a>
+				<router-link :to="{ name: 'tweets' }" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Tweets</router-link>
+				<router-link :to="{ name: 'replies' }" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Tweets & Replies</router-link>
+				<router-link :to="{ name: 'media' }" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Media</router-link>
+				<router-link :to="{ name: 'likes' }" class="p-4 flex-auto text-center font-bold text-dark hover:text-blue hover:bg-light-blue">Likes</router-link>
 			</nav>
 		</div>
 
-		<tweet v-for="tweet in user.tweets" :key="tweet.id" :tweet="tweet"></tweet>
-		<p v-if="! user.tweets.length" class="p-4">No tweets yet.</p>
-
+		<transition mode="out-in">
+			<router-view :user="user"></router-view>
+		</transition>
+		
 		<modal v-show="show" @close="close" title="Edit Profile">
 			<form id="edit-form" @submit.prevent="update">
 				<div class="mb-4">
@@ -69,12 +70,10 @@
 </template>
 
 <script>
-	import Tweet from "../components/Tweet"
 	import { mapState } from "vuex"
 
 	export default {
 		props: ["name"],
-		components: { Tweet },
 		computed: mapState(["auth"]),
 		data() {
 			return {
@@ -87,12 +86,12 @@
 			}
 		},
 		async beforeRouteEnter(to, from, next) {
-			let response = await axios.get(`/api/profile/${to.params.name}`)
+			let response = await axios.get(`/api/users/${to.params.name}`)
 			
 			next(vm => vm.user = response.data)
 		},
 		async beforeRouteUpdate(to, from, next) {
-			let response = await axios.get(`/api/profile/${to.params.name}`)
+			let response = await axios.get(`/api/users/${to.params.name}`)
 			
 			this.user = response.data
 
@@ -114,14 +113,14 @@
 				this.form = {}
 			},
 			update(e) {
-				axios.post(`/api/profile/${this.user.id}`, new FormData(e.target))
+				axios.post(`/api/users/${this.user.id}`, new FormData(e.target))
 					.then(response => {
 						Object.assign(this.user, response.data)
 
 						this.close()
 
 						this.$router.replace({ 
-							name: "profile", 
+							name: "tweets", 
 							params: { 
 								name: this.user.name 
 							} 
@@ -131,3 +130,13 @@
 		}
 	}
 </script>
+
+<style scoped>
+	.v-enter-active, .v-leave-active {
+		transition: opacity .5s;
+	}
+
+	.v-enter, .v-leave-to {
+		opacity: 0;
+	}
+</style>

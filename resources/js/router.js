@@ -4,7 +4,12 @@ import NProgress from "nprogress"
 import store from "./store"
 import Home from "./views/Home"
 import Explore from "./views/Explore"
+import Notifications from "./views/Notifications"
 import Profile from "./views/Profile"
+import Tweets from "./views/Tweets"
+import Replies from "./views/Replies"
+import Media from "./views/Media"
+import Likes from "./views/Likes"
 import Login from "./views/Login"
 
 Vue.use(VueRouter)
@@ -24,10 +29,21 @@ let router = new VueRouter({
 			component: Explore 
 		},
 		{ 
-			path: "/profile/:name", 
-			name: "profile", 
+			path: "/notifications", 
+			name: "notifications", 
+			component: Notifications 
+		},
+		{ 
+			path: "/users/:name", 
+			// name: "profile", 
 			component: Profile, 
-			props: true 
+			props: true,
+			children: [
+				{ path: "", name: "tweets", component: Tweets },
+				{ path: "replies", name: "replies", component: Replies },
+				{ path: "media", name: "media", component: Media },
+				{ path: "likes", name: "likes", component: Likes }
+			]
 		},
 		{ 
 			path: "/login", 

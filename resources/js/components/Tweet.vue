@@ -4,13 +4,14 @@
 		<div class="flex-1">
 			<div class="flex items-center">
 				<!-- <span class="font-bold mr-2">{{ tweet.user.name }}</span> -->
-				<router-link :to="`/profile/${tweet.user.name}`" class="font-bold mr-2">{{ tweet.user.name }}</router-link>
+				<router-link :to="`/users/${tweet.user.name}`" class="font-bold mr-2">{{ tweet.user.name }}</router-link>
 				<i class="fas fa-check-circle text-blue mr-2"></i>
 				<span class="text-sm text-dark mr-2">@kalleanka</span>
 				<span class="text-sm text-dark">{{ tweet.created_at }}</span>
 				<i class="fas fa-angle-down text-dark ml-auto"></i>
 			</div>
 			<p class="my-2">{{ tweet.content }}</p>
+			<img :src="tweet.gif" alt="gif" v-if="tweet.gif" class="w-full rounded-xl mb-4">
 			<div class="flex justify-between items-center text-dark text-sm">
 				<a href="#">
 					<i class="far fa-comment"></i>

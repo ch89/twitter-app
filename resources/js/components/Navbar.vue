@@ -31,7 +31,7 @@
 				links: [
 					{icon: 'fas fa-home', title: 'Home', id:'home', path: "/"},
 					{icon: 'fas fa-hashtag', title: 'Explore', id: 'explore', path: "/explore"},
-					{icon: 'far fa-bell', title: 'Notifications', id: 'notifications'},
+					{icon: 'far fa-bell', title: 'Notifications', id: 'notifications', path: "/notifications"},
 					{icon: 'far fa-envelope', title: 'Messages', id: 'messages'},
 					{icon: 'far fa-bookmark', title: 'Bookmarks', id: 'bookmarks'},
 					{icon: 'fas fa-clipboard-list', title: 'Lists', id: 'lists'},

@@ -4,7 +4,7 @@
 			<h3 class="text-lg font-bold">Explore</h3>
 			<i class="fas fa-cog text-xl text-blue"></i>
 		</div>
-		<router-link :to="`/profile/${user.name}`" v-for="user in users" :key="user.id" class="flex border-b p-4 hover:bg-gray-100">
+		<router-link :to="`/users/${user.name}`" v-for="user in users" :key="user.id" class="flex border-b p-4 hover:bg-gray-100">
 			<img :src="user.avatar" alt="Avatar" class="w-12 rounded-full mr-4">
 			<div>
 				<div class="flex items-center">

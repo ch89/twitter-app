@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -33,5 +33,7 @@ Route::resource("tweets", TweetController::class)->middleware("auth:api");
 Route::post("users/{user}/follow", [UserController::class, "follow"])->middleware("auth:api");
 Route::get("users", [UserController::class, "index"])->middleware("auth:api");
 
-Route::get("profile/{user:name}", [ProfileController::class, "show"])->middleware("auth:api");
-Route::post("profile/{user}", [ProfileController::class, "update"])->middleware("auth:api");
+Route::get("users/{user:name}", [UserController::class, "show"])->middleware("auth:api");
+Route::post("users/{user}", [UserController::class, "update"])->middleware("auth:api");
+
+Route::get("notifications", [NotificationController::class, "index"])->middleware("auth:api");

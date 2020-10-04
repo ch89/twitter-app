@@ -20,7 +20,7 @@
 		</div>
 		<div class="bg-gray-100 rounded-xl overflow-hidden">
 			<h3 class="text-lg font-bold p-4">Who to Follow</h3>
-			<router-link :to="{ name: 'profile', params: { name: user.name } }" class="flex items-center border-t p-4 hover:bg-gray-200" v-for="user in users" :key="user.id">
+			<router-link :to="{ name: 'tweets', params: { name: user.name } }" class="flex items-center border-t p-4 hover:bg-gray-200" v-for="user in users" :key="user.id">
 				<img :src="user.avatar" alt="Avatar" class="w-12 rounded-full mr-4">
 				<div>
 					<div class="flex items-center">
