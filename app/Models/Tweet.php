@@ -12,9 +12,19 @@ class Tweet extends Model
 
     protected $fillable = ["content", "user_id"];
     protected $with = ["user"];
+    protected $withCount = ["likes"];
+    protected $appends = ["liked"];
 
     public function user() {
     	return $this->belongsTo(User::class);
+    }
+
+    public function likes() {
+    	return $this->belongsToMany(User::class, "likes");
+    }
+
+    public function getLikedAttribute() {
+        return $this->likes()->where("user_id", auth()->id())->exists();
     }
 
     public function getCreatedAtAttribute($value) {

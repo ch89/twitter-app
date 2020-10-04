@@ -2178,7 +2178,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-//
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2216,7 +2221,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["tweet"],
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("tweet", ["remove"])
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("tweet", ["remove"])), {}, {
+    like: function like() {
+      var _this = this;
+
+      axios.post("/api/tweets/".concat(this.tweet.id, "/like")).then(function () {
+        _this.tweet.liked = !_this.tweet.liked;
+        _this.tweet.liked ? _this.tweet.likes_count++ : _this.tweet.likes_count--;
+      });
+    }
+  })
 });
 
 /***/ }),
@@ -2467,6 +2481,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -5468,7 +5485,23 @@ var render = function() {
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _vm._m(2),
+            _c(
+              "a",
+              {
+                class: { "text-red": _vm.tweet.liked },
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.like($event)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-heart" }),
+                _vm._v(" " + _vm._s(_vm.tweet.likes_count) + "\n\t\t\t")
+              ]
+            ),
             _vm._v(" "),
             _c(
               "a",
@@ -5510,16 +5543,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", { attrs: { href: "#" } }, [
       _c("i", { staticClass: "fas fa-retweet" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("3")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "far fa-heart" }),
       _vm._v(" "),
       _c("span", [_vm._v("3")])
     ])
@@ -5859,14 +5882,16 @@ var render = function() {
         "div",
         {
           staticClass:
-            "flex justify-between items-center bg-white border-b p-4 sticky top-0 z-10"
+            "flex items-center bg-white border-b p-4 sticky top-0 z-10"
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _c("h3", { staticClass: "text-lg font-bold" }, [
             _vm._v(_vm._s(_vm.user.name))
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "text-sm text-dark" }, [
+          _c("span", { staticClass: "text-sm text-dark ml-auto" }, [
             _vm._v(_vm._s(_vm.user.tweets.length) + " Tweets")
           ])
         ]
@@ -5955,7 +5980,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _vm._m(1)
       ]),
       _vm._v(" "),
       _vm._l(_vm.user.tweets, function(tweet) {
@@ -6062,6 +6087,16 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "text-lg text-blue mr-4", attrs: { href: "#" } },
+      [_c("i", { staticClass: "fas fa-arrow-left" })]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

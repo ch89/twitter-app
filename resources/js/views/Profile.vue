@@ -1,8 +1,11 @@
 <template>
 	<div>
-		<div class="flex justify-between items-center bg-white border-b p-4 sticky top-0 z-10">
+		<div class="flex items-center bg-white border-b p-4 sticky top-0 z-10">
+			<a href="#" class="text-lg text-blue mr-4">
+				<i class="fas fa-arrow-left"></i>
+			</a>
 			<h3 class="text-lg font-bold">{{ user.name }}</h3>
-			<span class="text-sm text-dark">{{ user.tweets.length }} Tweets</span>
+			<span class="text-sm text-dark ml-auto">{{ user.tweets.length }} Tweets</span>
 		</div>
 
 		<div>

@@ -71,6 +71,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Tweet::class)->latest();
     }
 
+    public function likes() {
+        return $this->belongsToMany(Tweet::class, "likes");
+    }
+
     public function getCanAttribute() {
         return ["update" => Gate::allows("update", $this)];
     }

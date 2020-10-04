@@ -20,9 +20,8 @@
 					<i class="fas fa-retweet"></i>
 					<span>3</span>
 				</a>
-				<a href="#">
-					<i class="far fa-heart"></i>
-					<span>3</span>
+				<a href="#" :class="{ 'text-red': tweet.liked }" @click.prevent="like">
+					<i class="fas fa-heart"></i> {{ tweet.likes_count }}
 				</a>
 				<a href="#" @click.prevent="remove(tweet)">
 					<i class="fas fa-share-square"></i>
@@ -38,6 +37,15 @@
 
 	export default {
 		props: ["tweet"],
-		methods: mapActions("tweet", ["remove"])
+		methods: {
+			...mapActions("tweet", ["remove"]),
+			like() {
+				axios.post(`/api/tweets/${this.tweet.id}/like`)
+					.then(() => {
+						this.tweet.liked = ! this.tweet.liked
+						this.tweet.liked ? this.tweet.likes_count++ : this.tweet.likes_count--
+					})
+			}
+		}
 	}
 </script>

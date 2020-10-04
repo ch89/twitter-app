@@ -27,6 +27,7 @@ Route::post("login", [AuthController::class, "login"]);
 Route::post("logout", [AuthController::class, "logout"]);
 Route::get("user", [AuthController::class, "user"]);
 
+Route::post("tweets/{tweet}/like", [TweetController::class, "like"])->middleware("auth:api");
 Route::resource("tweets", TweetController::class)->middleware("auth:api");
 
 Route::post("users/{user}/follow", [UserController::class, "follow"])->middleware("auth:api");

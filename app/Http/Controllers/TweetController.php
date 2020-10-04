@@ -97,4 +97,8 @@ class TweetController extends Controller
     {
         $tweet->delete();
     }
+
+    public function like(Tweet $tweet) {
+        auth()->user()->likes()->toggle($tweet);
+    }
 }
